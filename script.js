@@ -5,6 +5,7 @@ let fromImage = document.querySelector(".from img");
 let toImage = document.querySelector(".to img");
 let msg = document.querySelector(".msg");
 let fromAmount = document.querySelector("#fromAmount");
+let toAmount = document.querySelector("#toAmount");
 let submit = document.querySelector("#submit");
 let form = document.querySelector("#form");
 let i = document.querySelector("i");
@@ -29,15 +30,26 @@ const getCurrency = async (fromCode,toCode) =>{
 (async ()=>{
     let rate = await getCurrency('usd','inr');
     msg.innerText = `1 USD = ${rate} INR`;
+    toAmount.value = rate;
 })();
 
 const calculate = async(fromCode, toCode, amount)=>{
+    let rate = await getCurrency(fromCode.toLowerCase(),toCode.toLowerCase());
+    if(amount == undefined){
+        amount = 1;
+        msg.innerText = `${amount} ${fromCode} = ${amount*rate} ${toCode}`;
+    }
+    toAmount.value = amount*rate;
+}
+
+const fromCalculate = async(fromCode, toCode, amount)=>{
     if(amount == undefined){
         amount = 1;
     }
     let rate = await getCurrency(fromCode.toLowerCase(),toCode.toLowerCase());
-    msg.innerText = `${amount} ${fromCode} = ${amount*rate} ${toCode}`;
+    fromAmount.value = amount/rate;
 }
+
 
 for(let code in countryList){
     dropdowns.forEach((drop)=>{
@@ -49,12 +61,14 @@ dropdowns[1].value = "INR";
 
 dropdowns[0].addEventListener('change',()=>{
     updateFlag(event.target,fromImage);
-    
+    fromAmount.value = 1;
+
     calculate(dropdowns[0].value,dropdowns[1].value);
 });
 
 dropdowns[1].addEventListener('change',()=>{
     updateFlag(event.target,toImage);
+    fromAmount.value = 1;
     
     calculate(dropdowns[0].value,dropdowns[1].value);
 });
@@ -74,5 +88,23 @@ i.addEventListener('click',()=>{
     updateFlag(dropdowns[0],fromImage);
     updateFlag(dropdowns[1],toImage);
 
+    fromAmount.value = 1;
+
     calculate(dropdowns[0].value,dropdowns[1].value);
-})
+});
+
+fromAmount.addEventListener('input',async ()=>{
+    let fromCode = dropdowns[0].value;
+    let toCode = dropdowns[1].value;
+    let amount = fromAmount.value;
+    console.log(fromCode,toCode,amount);
+    await calculate(fromCode,toCode,amount);
+});
+
+toAmount.addEventListener('input',async ()=>{
+    let fromCode = dropdowns[0].value;
+    let toCode = dropdowns[1].value;
+    let amount = toAmount.value;
+    console.log(fromCode,toCode,amount);
+    await fromCalculate(fromCode,toCode,amount);
+});
