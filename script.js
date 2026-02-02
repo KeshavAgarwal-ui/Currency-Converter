@@ -14,7 +14,7 @@ form.addEventListener('submit',(e)=>{
 })
 
 const updateFlag = (element, imgTag) => {
-    let countryCode = element.value.substring(0,2);
+    let countryCode = countryList[element.value];
     let newSrc = IMAGE_URL + `/${countryCode}/flat/64.png`;
     imgTag.src = newSrc;
 }
