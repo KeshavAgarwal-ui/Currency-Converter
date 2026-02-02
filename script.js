@@ -30,7 +30,7 @@ const getCurrency = async (fromCode,toCode) =>{
 (async ()=>{
     let rate = await getCurrency('usd','inr');
     msg.innerText = `1 USD = ${rate} INR`;
-    toAmount.value = rate;
+    toAmount.value = rate.toFixed(2);
 })();
 
 const calculate = async(fromCode, toCode, amount)=>{
@@ -39,7 +39,7 @@ const calculate = async(fromCode, toCode, amount)=>{
         amount = 1;
         msg.innerText = `${amount} ${fromCode} = ${amount*rate} ${toCode}`;
     }
-    toAmount.value = amount*rate;
+    toAmount.value = (amount*rate).toFixed(2);
 }
 
 const fromCalculate = async(fromCode, toCode, amount)=>{
@@ -47,7 +47,7 @@ const fromCalculate = async(fromCode, toCode, amount)=>{
         amount = 1;
     }
     let rate = await getCurrency(fromCode.toLowerCase(),toCode.toLowerCase());
-    fromAmount.value = amount/rate;
+    fromAmount.value = (amount/rate).toFixed(2);
 }
 
 
