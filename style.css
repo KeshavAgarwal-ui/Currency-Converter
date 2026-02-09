@@ -78,21 +78,16 @@ form input{
     width: auto;
 }
 
-.msg{
-    margin-top: 2rem;
-    text-align: center;
-}
-
-form button {
+.msg-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 3rem;
+    border-radius: 0.75rem;
     background-color: #af4d9f;
     color: white;
     font-size: 1.15rem;
-    cursor: pointer;
     margin-top: 2rem;
-    &:hover{
-        opacity: 0.9;
-    }
 }
 
 i:hover{

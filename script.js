@@ -6,7 +6,6 @@ let toImage = document.querySelector(".to img");
 let msg = document.querySelector(".msg");
 let fromAmount = document.querySelector("#fromAmount");
 let toAmount = document.querySelector("#toAmount");
-let submit = document.querySelector("#submit");
 let form = document.querySelector("#form");
 let i = document.querySelector("i");
 
@@ -72,13 +71,6 @@ dropdowns[1].addEventListener('change',()=>{
     
     calculate(dropdowns[0].value,dropdowns[1].value);
 });
-submit.addEventListener('click',async ()=>{
-    let fromCode = dropdowns[0].value;
-    let toCode = dropdowns[1].value;
-    let amount = fromAmount.value;
-    console.log(fromCode,toCode,amount);
-    await calculate(fromCode,toCode,amount);
-})
 
 i.addEventListener('click',()=>{
     let tempOption = dropdowns[0].value;
